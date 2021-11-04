@@ -13,6 +13,9 @@ C++
 ## 1.4. 게임 구동 환경
 콘솔창
 
+## 1.5. 참고 사이트
+[객체지향1](https://effectiveprogramming.tistory.com/entry/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%EC%9D%98-%EC%98%AC%EB%B0%94%EB%A5%B8-%EC%9D%B4%ED%95%B4-%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5-%EC%96%B8%EC%96%B4%EC%9D%98-%EB%8C%80%EB%91%90?category=660012)
+[객체지향2](https://voidfunction-e.tistory.com/)
 # 2. 게임 소개
 
 ## 2.1. 게임 장르
