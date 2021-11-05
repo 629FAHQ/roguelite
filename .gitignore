@@ -1,2 +1,4 @@
 goorm.manifest
 *.out
+*.txt
+/_test_env
