@@ -1,2 +1,5 @@
 goorm.manifest
 *.out
+test.cpp
+_test_env/
+gitmessage.txt
