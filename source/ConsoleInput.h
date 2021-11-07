@@ -1,15 +1,16 @@
 #include "InputInterface.h"
 #include <ncurses.h>
 /*
-up 119
-left 97
-down 115
-right 100
-attack 32
+W 119
+A 97
+S 115
+D 100
+SPACE 32
+ESC 27
 */
 class ConsoleInput : public InputInterface {
 public:
-	ConsoleInput() : InputInterface(119, 115, 100, 97, 32) {}
+	ConsoleInput() : InputInterface(119, 115, 100, 97, 32, 27) {}
 	virtual int listenInput() {
 		return getch();
 	}
@@ -28,6 +29,9 @@ public:
 	}
 	virtual void attack() {
 		printw("attack\n");
+	}
+	virtual void quit() {
+		printw("quit\n");
 	}
 	
 };
