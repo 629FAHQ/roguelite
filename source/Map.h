@@ -1,58 +1,65 @@
-/*
-기본적인 로그라이크의 맵을 따르지 않기로 결정함.
-내가 만들 게임의 맵은 미로 형태이며, 우선적으로
-맵을 구성하는데에 필요한 객체는 Tile과 Map이면
-충분할거같음. 따라서 기존에 구상했던, Room과 Passage
-그리고 Structure는 삭제함.
-
-우선 갑자기 게임의 컨셉이 바뀐거기 때문에 여기에
-이 주석만 남겨두고, 커밋 후 브랜치 옮겨가겠음~
-*/
-
 #include "Tile.h"
 
 class Map {
 private:
-	/*
 	const int width, height;
-	vector<vector<Tile *>> board;
-	vector<Room> rooms;
-	vector<Passage> passages;
-	
-	// 빈 타일들을 저장해 둔 board를 만든다.
-	void setEmptyTile() {
-		makeBoardEmpty();
-		
-		for (int h=0; h<height; h++) {
-			tmpTile.clear();
-			for (int w=0; w<width; w++) {
-				tmpTile.push_back(new Tile());
-			}
-			board.push_back(tmpTile);
-		}
-	}
-	
-	void makeBoardEmpty() {
-		// 만약 board에 값이 있다면
-		while (!board.empty()) {
-			while (!board.back().empty()) {
-				delete board.back().back();
-			}
-			board.pop();
-		}
-	}
-	
+	vector<vector<Tile>> board;
 public:
-	Map(int w, int h) : width(w), height(h) {
-		// 보드 초기화
-		makeBoardEmpty();
-	}
-	
-	// (x, y) 타일에 위치한 타일을 반환한다.
-	Tile* getTile(int x, int y) {}
-	
-	void generateMap() {
-		// 맵내의 방, 통로 등을 생성한다.
-	}
-	*/
+	Map(int w, int h);
+	void generate();
+	bool moveEntity(int x1, int y1, int x2, int y2);
+	bool deleteEntity(int x, int y);
+	bool addEntity(int x, int y, Entity* e);
+	bool isWall(int x, int y);
 };
+
+/**
+	Map 클래스의 생성자이다.
+	
+	param w, h
+	각각, 너비와 높이의 값이다.
+*/
+Map::Map(int w, int h) : width(w), height(h) {
+	
+}
+
+/**
+	미로 형태의 맵을 만든다.
+*/
+void Map::generate() {
+	
+}
+
+/**
+	(x1, y1) 타일에 위치한 Entity를 (x2, y2)로 옮긴다
+	
+	return 성공여부
+*/
+bool Map::moveEntity(int x1, int y1, int x2, int y2) {}
+
+/**
+	(x, y)위치의 타일에 Entity를 추가한다.
+	
+	return 성공여부
+*/
+bool Map::addEntity(int x, int y, Entity* e) {
+	
+}
+
+/**
+	(x, y) 타일에 위치한 Entity를 제거한다.
+	
+	return 성공여부
+*/
+bool Map::deleteEntity(int x, int y) {
+	
+}
+
+/**
+	(x, y) 타일이 벽인지 아닌지 반환한다.
+	
+	return 벽 여부
+*/
+bool Map::isEmpty(int x, int y) {
+	
+}
