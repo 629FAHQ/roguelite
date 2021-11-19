@@ -1,10 +1,27 @@
+/**	 이것저것
+
+	엔티티의 공통적인 책임.
+	
+	
+	1. 엔티티는 상하좌우로 움직일 수 있어야 한다.
+	(그전에 맵한테 물어봐야겠지?)
+	
+	2. 엔티티는 데미지를 입을 수 있어야 한다.
+	
+	3. 엔티티는 죽을 수 있어야 한다.
+	
+	4. 엔티티는 자신의 턴을 관리할 수 있어야 한다.
+	
+	5. 엔티티는 자신의 위치를 관리할 줄 알아야 한다.
+*/
+
 /**
 	Monseter와 Player가 상속 받을 추상 클래스이다.
 */
 
 class Entity{
 private:
-	std::string name;
+	const std::string name;
 	int total_hp, hp, total_tc, tc;
 	
 public:
