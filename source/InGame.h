@@ -35,16 +35,23 @@ public:
 	bool isFinished(); // 게임이 종료되었는지 판단한다.
 	
 	void setPlayer(int action);
-	int isWall (int x, int y, bool absolute);
-	int isElement (int x, int y, bool absolute);
-	bool isEntity (int x, int y, bool absolute);
+	int isWall (int x, int y);
+	int getElementId (int x, int y);
+	bool getEntityId (int x, int y);
 };
 
 /**
 	InGame 클래스의 생성자이다.
 */
 InGame::InGame() {
-	
+	player = new Player();
+	map = new Map(100, 100);
+	turn = 0;
+}
+
+InGame::~InGame() {
+	delete player;
+	delete map;
 }
 
 /**
@@ -54,42 +61,56 @@ InGame::InGame() {
 	적절한 행동을 할 수 있도록 메시지를 전파한다.
 */
 void InGame::nextTurn() {
-	
+	turn += 1;
 }
 
 /**
 	게임의 종료조건(성공, 실패 등)에 따라 게임이 종료되었는지 여부를 반환한다.
 */
 bool InGame::isFinished() {
+	bool res = 0;
+	res |= player->isDead(); // 플레이어가 죽었는지
 	
+	return res;
 }
 
 /**
 	InputInterface에서 입력받은 값에 따라 플레이어가 어떤 행동을 할 지 전파하는데 사용할 메소드이다.
 */
 void InGame::setPlayer(int action) {
-	
+	if (action == 1)
+		player->goUp();
+	else if (action == 2)
+		player->goDown();
+	else if (action == 3)
+		player->goLeft();
+	else if (action == 4)
+		player->goRight();
+	else if (action == 5)
+		player->goAttack();
+	else
+		player->goMana();
 }
 
 /**
 	OutputInterface에서 사용할 해당 타일이 벽인지 반환하는 메소드이다.
 */
-int InGame::isWall (int x, int y, bool absolute) {
-	
+int InGame::isWall (int x, int y) {
+	return map->isWall(x, y);
 }
 
 /**
 	OutputInterface에서 사용할 해당 타일에 Element가 있는지,
 	있다면 어떤 Element인지 반환하는 메소드이다.
 */
-int InGame::isElement (int x, int y, bool absolute) {
-	
+int InGame::getElementId (int x, int y) {
+	return map->getElementId(x, y);
 }
 
 /**
 	OutputInterface에서 사용할 해당 타일에 Entity(몬스터나 플레이어)가 있는지,
 	있다면 플레이어인지 몬스터인지 반환하는 메소드이다.
 */
-bool InGame::isEntity (int x, int y, bool absolute) {
-	
+bool InGame::getEntityId (int x, int y) {
+	return map->getEntityId(x, y);
 }
