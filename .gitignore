@@ -1,5 +1,10 @@
 goorm.manifest
 *.out
+<<<<<<< HEAD
 test.cpp
 _test_env/
 gitmessage.txt
+=======
+*.txt
+/_test_env
+>>>>>>> entity
