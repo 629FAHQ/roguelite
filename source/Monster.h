@@ -1,40 +1,20 @@
-/**	이것저것
-
-	엔티티에서 특화된 플레이어만의 책임.
-	
-	
-	1. 몬스터는 플레이어와의 거리에 따라 행동을 정할 수 있어야 한다.
-	
-	2. 몬스터는 자신의 활성화 상태를 관리 할 수 있어야 한다.
-		- 내 근처에 플레이어가 있는지 확인 할 수 있어야 한다.
-	
-	3. 몬스터는 자신이 활성화 상태일때만 턴을 관리할 수 있어야 한다.
-	
-	4. 몬스터의 행동은 플레이어의 이득을 최소화 해야한다.
-		4-1. 이번턴에 플레이어를 공격할 수 있으면 플레이어를 공격한다.
-		4-2. 그렇지 않다면 플레이어에게 접근한다.
-		(그렇다면 특정 타일에 몬스터가 있는지랑 플레이어가 있는지를 물어볼 수 있어야 한다.)
-	
-	5. 몬스터는 자신의 공격 사거리를 관리할 줄 알아야 한다.
-	
-
-*/
-
-/**
-	몬스터들을 구현할 클래스이다.
-*/
+#ifndef MONSTER_H
+#define MONSTER_H
 
 class Monster : public Entity {
 private:
 	bool state;
-	int range, damage;
+	int attackRange, senseRange, damage;
 public:
-	Monster();
+	Monster(int ar, int sr);
+	
 	void doing();
-	bool isPlayerInRange();
+	
+	bool isPlayerInRange(int range);
+	
 	void changeState();
 	bool getState();
-	bool canAttack();
+	
 	void attack();
 	void move();
 	
@@ -44,7 +24,7 @@ public:
 /**
 	Monster의 생성자이다.
 */
-Monster::Monster() {
+Monster::Monster(int x, int y, int ar, int sr) : attackRange(ar), senseRange(sr), Entity("monster", x, y, 50, 2) {
 	
 }
 
@@ -53,7 +33,10 @@ Monster::Monster() {
 	(움직인다 / 공격한다)
 */
 void Monster::doing() {
-	// 구현 예정
+	if (isPlayerInRange())
+		attack();
+	else
+		move();
 }
 
 
@@ -63,8 +46,13 @@ void Monster::doing() {
 	
 	return 범위 내 플레이어 존재 여부
 */
-bool Monster::isPlayerInRange() {
-	
+bool Monster::isPlayerInRange(int range) {
+	//getMap()->getMinDis(int x1, int y1, int x2, int y2);
+	//getMap()->getMinDis(int x1, int y1, int x2, int y2);
+	int px = getMap()->getPx(), py = getMap()->getPy();
+	if (getMap()->getMinDis(px, py, getX(), getY()) <= range)
+		return true;
+	return false;
 }
 
 /**
@@ -81,22 +69,17 @@ void Monster::changeState() {
 	return state
 */
 bool Monster::getState() {
-	
+	return state;
 }
 
 /**
-	몬스터가 이번 턴에 플레이어를 공격할 수 있는지 여부를 반환한다.
-	
-	return 공격 가능 여부
-*/
-bool Monster::canAttack() {
-	
-}
-
-/**
-	몬스터가 공격 범위에 있는 플레이어를 공격한다.
+	플레이어를 공격한다.
 */
 void Monster::attack() {
+	int px = getMap()->getPx(), py = getMap()->getPy();
+	
+	Entity* e = getMap()->getEntity(px, py);
+	e->getDamage(damage);
 	
 }
 
@@ -104,5 +87,12 @@ void Monster::attack() {
 	몬스터가 플레이어에게 가까워지는 쪽으로 한 칸 움직인다.
 */
 void Monster::move() {
+	int px = getMap()->getPx(), py = getMap()->getPy();
+	//Entity* e = getMap()->getNextRoute(int fx, int fy, int tx, int ty);
+	int dx = getMap()->getNextRouteX(getX(), gety(), px, py);
+	int dy = getMap()->getNextRouteY(getX(), gety(), px, py);
 	
+	setPostion(getX()+dx, getY()+dy);	
 }
+
+#endif

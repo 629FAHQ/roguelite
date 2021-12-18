@@ -1,39 +1,26 @@
-/**	 이것저것
+#ifndef ENTITY_H
+#define ENTITY_H
 
-	엔티티의 공통적인 책임.
-	
-	
-	1. 엔티티는 상하좌우로 움직일 수 있어야 한다.
-	(그전에 맵한테 물어봐야겠지?)
-	
-	2. 엔티티는 데미지를 입을 수 있어야 한다.
-	
-	3. 엔티티는 죽을 수 있어야 한다.
-	
-	4. 엔티티는 자신의 턴을 관리할 수 있어야 한다.
-	
-	5. 엔티티는 자신의 위치를 관리할 줄 알아야 한다.
-*/
-
-/**
-	Monseter와 Player가 상속 받을 추상 클래스이다.
-*/
-
+#include "Map.h";
 class Entity{
 private:
 	const std::string name;
-	int total_hp, hp, total_tc, tc;
-	
+	int totalHp, hp, totalTc, tc, x, y;
+	Map* map;
 public:
-	Entity(std::string name, int hp, int tc);
-		
-	bool go_right(int d);
-	bool go_left(int d);
-	bool go_up(int d);
-	bool go_down(int d);
-	void get_damage(int amount);
-	bool down_turn_count();
-	bool is_alive();
+	Entity(std::string name, int x, int y, int hp, int tc);
+	
+	void setPostion(int x, int y);
+	
+	int getX();
+	int getY();
+	
+	void getDamage(int amount);
+	void useTurnCount(int amount);
+	bool isTurn();
+	bool isAlive();
+	
+	Map* getMap();
 	
 	virtual void atack() = 0;
 };
@@ -41,54 +28,65 @@ public:
 /**
 	Entity 클래스의 생성자이다.
 	
-	param
+	PARAM 이름, x좌표, y좌표, 최대 체력, 최대 턴
 		name 이름
 		hp 체력
 		tc 턴 주기
 */
-Entity::Entity(std::string name, int hp, int tc) : name(name), total_hp(hp), hp(hp), total_tc(tc), tc(tc){
+Entity::Entity(std::string name, int x, int y,  int hp, int tc) : name(name), x(x), y(y), totalHp(hp), hp(hp), totalTc(tc), tc(tc) {
 	
 }
 
 /**
-	해당 Entity를 'd'칸 오른쪽으로 움직이고 움직임
-	성공 여부를 반환한다.
-
-	param int d 움직일 거리
-	return 움직임 성공 여부(bool)
-	(움직임 성공 / 움직임 실패)
+	해당 엔티티의 위치를 x, y로 옮긴다.
 */
-bool Entity::go_right(int d) {
+void Entity::setPostion(int x, int y) {
+	x = x;
+	y = y;
 }
 
 /**
-	위와 동일 하므로 주석 생략.
+	해당 엔티티의 x좌표를 반환한다.
 */
-bool Entity::go_left(int d) {
+int Entity::getX() {
+	return x;
 }
 
 /**
-	위와 동일 하므로 주석 생략.
+	해당 엔티티의 y좌표를 반환한다.
 */
-bool Entity::go_up(int d) {
+int Entity::getY() {
+	return y;
 }
 
 /**
-	위와 동일 하므로 주석 생략.
-*/
-bool Entity::go_down(int d) {
-}
-
-
-/**
-	해당 Entity의 체력을 'amount'만큼  뺀다.
+	해당 Entity의 체력을 amount만큼 감소시킨다.
 	
 	param int amount
 */
-void Entity::get_damage(int amount) {
+void Entity::getDamage(int amount) {
 	hp -= amount;
 	if (hp < 0)
 		hp = 0;
+}
+
+/**
+	해당 Entity의 턴 카운트를 amount만큼 감소시킨다.
+*/
+void useTurnCount(int amount) {
+	tc += amount;
+	if (tc / totalTc >= 1)
+		tc = 0;
+	tc %= totalTc;
+}
+
+/**
+	해당 엔티티의 턴이 돌아왔는지 여부를 참/거짓으로 반환한다.
+*/
+bool isTurn() {
+	if (tc == 0)
+		return true;
+	return false;
 }
 
 /**
@@ -97,8 +95,17 @@ void Entity::get_damage(int amount) {
 	return 생존 여부(bool)
 	(살아있음 / 죽어있음)
 */
-bool Entity::is_alive() {
+bool Entity::isAlive() {
 	if (hp > 0)
 		return true;
 	return false;
 }
+
+/**
+
+*/
+Map* Entity::getMap() {
+	return map;
+}
+
+#endif
