@@ -8,3 +8,4 @@ gitmessage.txt
 *.txt
 /_test_env
 >>>>>>> entity
+*.o
