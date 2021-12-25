@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Map.h"
+#include <iostream>
 //#include "Entity"
 /**
 	Player의 생성자이다.
@@ -14,12 +15,27 @@ Player::Player(int x, int y, Map* map) : Entity("player", x, y, 100, 1, 1, map) 
 	해당 타일을 기준으로 공격이 발동 된다.
 */
 void Player::attack() {
-	// Map에게 현재 타일 위에 있는 Element가 누군지 알아온다.
-	// 알아온 Element에게 현재 마나량 만큼의 마나를 소모해 공격해달라고 요청한다.
-	// 
+	// mana 범위 안에 Monster가 있다면 공격한다.
+	// 공격은 십자 형태로 한다.
+	int dx[] = {1, -1, 0, 0};
+	int dy[] = {0, 0, 1, -1};
 	
-	
-	useMana(getMana());
+	for (int i=0; i<4; i++) {
+		
+		int nx = getX(), ny = getY();
+		for (int r = 0; r<10; r++) {
+			nx += dx[i];
+			ny += dy[i];
+			if (getMap()->isWall(nx, ny))
+				break;
+			
+			if (getMap()->isEntity(nx, ny, 2)) {
+				Entity* e = getMap()->getEntity(nx, ny);
+				e->getDamage(mana*10);
+			}
+		}
+	}
+	useMana(mana);
 	//Element* e = getMap()->getElement();
 	//e->attack();
 	

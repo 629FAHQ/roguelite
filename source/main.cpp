@@ -34,13 +34,15 @@ int main() {
 	//map->setEntity(7, 1, m1);
 	//cout << map->getMinDis(p1->getX(), p1->getY(), m1->getX(), m1->getY()) << "\n";
 	while (!(m1->isPlayerInRange(2))) {
+		p1->attack();
 		m1->doing();
-		
-		map->_test_printBoard();
-		usleep(100000);
+		//map->_test_printBoard();
+		//usleep(50000);
 		cout << "\n\n";
 	}
-	m1->doing();
+	map->_test_printBoard();
+	if (m1->isAlive())
+		m1->doing();
 	cout << "Player: " << p1->getHp() << "\n";
 	cout << "Monster: " << m1->getHp() << "\n";
 }

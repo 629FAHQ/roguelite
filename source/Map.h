@@ -30,7 +30,10 @@ public:
 	int getPx();
 	int getPy();
 	int getNextRoute(int fx, int fy, int tx, int ty);
-		
+	
+	bool isWall(int x, int y);
+	bool isEntity(int x, int y, int entityId);
+	
 	void _test_printBoard();
 };
 

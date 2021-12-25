@@ -277,3 +277,21 @@ void Map::_test_printBoard() {
 			std::cout << "\n";
 		}
 }
+
+/**
+	(x, y)에 있는 타일이 벽인지 아닌지 여부를 반환한다.
+*/
+bool Map::isWall(int x, int y) {
+	return board[y][x].isWall();
+}
+
+
+/**
+	(x, y)에 있는 엔티티의 아이디가 entityId와 같은지 여부를 반환환다.
+	0 : Nothing
+	1 : Player
+	2 : Monster
+*/
+bool Map::isEntity(int x, int y, int entityId) {
+	return (board[y][x].isEntity() == entityId);
+}
